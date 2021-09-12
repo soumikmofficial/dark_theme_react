@@ -3,8 +3,16 @@ import data from "./data.js";
 import React, { useState, useEffect } from "react";
 import Article from "./components/Article.jsx";
 
+const getThemePref = () => {
+  let theme = "light-theme";
+  if (localStorage.getItem("theme")) {
+    theme = localStorage.getItem("theme");
+  }
+  return theme;
+};
+
 function App() {
-  const [theme, setTheme] = useState("light-theme");
+  const [theme, setTheme] = useState(getThemePref());
   const handleClick = () => {
     if (theme === "light-theme") {
       setTheme("dark-theme");
@@ -15,7 +23,7 @@ function App() {
 
   useEffect(() => {
     document.documentElement.className = theme;
-    console.log(new Date());
+    localStorage.setItem("theme", theme);
   }, [theme]);
   return (
     <main className="App">
